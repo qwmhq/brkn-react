@@ -4,6 +4,7 @@ import About from './pages/About';
 import Product from './pages/Product';
 import RootLayout from './components/RootLayout';
 import Cart from './pages/Cart';
+import Sessions from './pages/Sessions';
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/product/:slug" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/sessions" element={<Sessions />} />
       </Route>
     </Routes>
   );
