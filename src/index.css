@@ -7,6 +7,12 @@
   --grid-gap: 0.5vw;
 }
 
+@media (max-width: 480px)  {
+  :root {
+    --edge-gap: 3vw;
+    --grid-gap: 1vw;
+  }
+}
 
 html, body {
   font-family: "Vetica", sans-serif;

@@ -39,11 +39,11 @@ const Cart = () => {
   };
 
   return (
-    <main className="flex-grow p-[--edge-gap] text-white grid grid-cols-[3fr_auto_1fr]">
-      <div className="pr-[--edge-gap]">
+    <main className="flex-grow p-[--edge-gap] text-white grid grid-rows-[3fr_1fr] sm:grid-rows-1 sm:grid-cols-[3fr_auto_1fr]">
+      <div className="sm:pr-[--edge-gap]">
         <h1 className="text-2xl uppercase">Cart({cart.length})</h1>
         <Separator className="" />
-        <div className="px-4">
+        <div className="max-h-[62vh] sm:max-h-none sm:px-4 overflow-y-scroll">
           {cart.map((item, index) => {
             return (
               <div key={index}>
@@ -97,8 +97,8 @@ const Cart = () => {
           })}
         </div>
       </div>
-      <Separator orientation="vertical" />
-      <div className="pl-[--edge-gap]">
+      <Separator orientation="vertical" className="hidden sm:block" />
+      <div className="sm:pl-[--edge-gap]">
         <h2 className="text-xl uppercase">Cart Summary</h2>
         <Separator className="mb-2" />
         <div className="flex justify-between items-center text-lg">

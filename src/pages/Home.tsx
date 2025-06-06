@@ -28,15 +28,15 @@ const Home = () => {
         <img
           src={brknLogo}
           alt="BRKNBRDS Logo"
-          className="max-w-[6vw]"
+          className="max-w-[14vw] sm:max-w-[6vw]"
         />
       </header>
 
-      <div className="grid grid-cols-[repeat(8,_1fr)] gap-[--grid-gap] justify-center items-start">
+      <div className="grid grid-cols-[repeat(4,_1fr)] sm:grid-cols-[repeat(8,_1fr)] gap-[--grid-gap] justify-center items-start">
         {products.map((product, index) => (
           <div
             key={index}
-            className="w-full max-w-[8vw] overflow-hidden cursor-pointer"
+            className="w-full max-w-[24vw] mb-4 overflow-hidden cursor-pointer sm:x-[mb-0,max-w-[8vw]]"
           >
             <TooltipProvider>
               <Tooltip>
