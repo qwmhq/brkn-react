@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
 
 import Loader from "../components/Loader";
@@ -15,9 +15,21 @@ import products from "../assets/data/products.ts";
 const Home = () => {
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const hasVisited = localStorage.getItem("hasVisited");
+    if (hasVisited) {
+      setLoading(false);
+    }
+  }, []);
+
+  const enterFn = () => {
+    localStorage.setItem("hasVisited", "true");
+    setLoading(false);
+  };
+
   if (loading) {
     return (
-      <Loader enterFn={() => setLoading(false)} />
+      <Loader enterFn={enterFn} />
     );
   }
 
