@@ -21,7 +21,6 @@ const Cart = () => {
 
   useEffect(() => {
     document.title = "Cart – BRKNBRDS";
-    cartDispatch({ type: "INITIALIZE" });
   }, []);
 
   const cartTotal = cart.reduce((acc: number, curr: CartItem) => acc + curr.quantity * curr.product.price, 0);
