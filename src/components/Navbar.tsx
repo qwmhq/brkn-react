@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router";
 
 import {
@@ -9,9 +9,11 @@ import {
 import { Separator } from "@/components/ui/separator";
 
 import products from "@/assets/data/products.ts";
+import { CartContext } from "@/reducers/cartReducer";
 
 const Navbar = () => {
   const [showSearchResults, setShowSearchResults] = useState(false);
+  const [cart, _] = useContext(CartContext);
 
   const [searchTerm, setSearchTerm] = useState("");
   const searchResults = searchTerm.length > 0 ? products.filter(product => product.name.toLowerCase().includes(searchTerm.trim().toLowerCase())) : []
@@ -32,7 +34,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="py-4 px-[--edge-gap] bg-[#333] uppercase text-xs flex flex-wrap gap-3 items-center justify-between sm:x-[flex-nowrap]">
+      <nav className="py-4 px-[--edge-gap] bg-[#333] uppercase text-sm flex flex-wrap gap-3 items-center justify-between sm:x-[flex-nowrap]">
 
         <Popover
           open={showSearchResults}
@@ -93,9 +95,12 @@ const Navbar = () => {
         </ul>
 
         <div
-          className="flex-grow-0 flex-shrink-0 basis-auto text-white"
+          className="pt-1 pr-4 relative flex-grow-0 flex-shrink-0 basis-auto text-white"
         >
           <Link to="/cart" className="uppercase">Cart</Link>
+          <div className={`size-4 rounded-full absolute top-0 right-0 bg-red-600 text-white text-xs ${cart.length > 0 ? "flex" : "hidden"} items-center justify-center`}>
+            <span className="text-center">{cart.length}</span>
+          </div>
         </div>
 
       </nav>

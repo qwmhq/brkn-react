@@ -21,6 +21,7 @@ const Cart = () => {
 
   useEffect(() => {
     document.title = "Cart – BRKNBRDS";
+    cartDispatch({ type: "INITIALIZE" });
   }, []);
 
   const cartTotal = cart.reduce((acc: number, curr: CartItem) => acc + curr.quantity * curr.product.price, 0);
@@ -39,7 +40,7 @@ const Cart = () => {
   };
 
   return (
-    <main className="flex-grow p-[--edge-gap] text-white grid grid-rows-[3fr_1fr] sm:grid-rows-1 sm:grid-cols-[3fr_auto_1fr]">
+    <main className="flex-grow p-[--edge-gap] text-white grid grid-rows-[3fr_1fr] sm:grid-rows-1 sm:grid-cols-[5fr_auto_2fr]">
       <div className="sm:pr-[--edge-gap]">
         <h1 className="text-2xl uppercase">Cart({cart.length})</h1>
         <Separator className="" />

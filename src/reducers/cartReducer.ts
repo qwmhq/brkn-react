@@ -3,7 +3,6 @@ import { createContext } from "react";
 
 interface InitializeAction {
   type: "INITIALIZE",
-  payload: CartItem[];
 }
 
 interface AddItemAction {
@@ -35,21 +34,30 @@ export type CartAction = InitializeAction
 const reducer = (state: CartItem[], action: CartAction): CartItem[] => {
   switch (action.type) {
     case "INITIALIZE":
-      return action.payload;
+      const savedStateJSON = localStorage.getItem("cart");
+      if (savedStateJSON) {
+        return JSON.parse(savedStateJSON);
+      }
+      return [];
     case "ADDITEM": {
       const itemInCart = state.find(x => x.product.slug === action.payload.slug);
-      if (!itemInCart) {
-        return [...state].concat({ product: action.payload, quantity: 1 });
-      } else {
-        return [...state];
-      }
+      const newState = itemInCart ? [...state] : [...state].concat({ product: action.payload, quantity: 1 });
+      localStorage.setItem("cart", JSON.stringify(newState));
+      return newState;
+      // if (!itemInCart) {
+      //   const newState = [...state].concat({ product: action.payload, quantity: 1 })
+      //   return newState;
+      // } else {
+      //   return [...state];
+      // }
     }
     case "INC_ITEM": {
       const itemInCart = state.find(x => x.product.slug === action.payload.slug);
+      let newState;
       if (!itemInCart) {
-        return [...state].concat({ product: action.payload, quantity: 1 });
+        newState = [...state].concat({ product: action.payload, quantity: 1 });
       } else {
-        return state.map(item => {
+        newState = state.map(item => {
           if (item === itemInCart) {
             return { ...itemInCart, quantity: itemInCart.quantity + 1 };
           } else {
@@ -57,13 +65,16 @@ const reducer = (state: CartItem[], action: CartAction): CartItem[] => {
           }
         })
       }
+      localStorage.setItem("cart", JSON.stringify(newState));
+      return newState;
     }
     case "DEC_ITEM": {
       const itemInCart = state.find(x => x.product.slug === action.payload.slug);
+      let newState;
       if (!itemInCart) {
-        return [...state];
+        newState = [...state];
       } else {
-        return state.map(item => {
+        newState = state.map(item => {
           if (item === itemInCart && item.quantity > 1) {
             return { ...itemInCart, quantity: itemInCart.quantity - 1 };
           } else {
@@ -71,9 +82,13 @@ const reducer = (state: CartItem[], action: CartAction): CartItem[] => {
           }
         })
       }
+      localStorage.setItem("cart", JSON.stringify(newState));
+      return newState;
     }
     case "REMOVEITEM": {
-      return state.filter(item => item.product !== action.payload);
+      const newState = state.filter(item => item.product !== action.payload);
+      localStorage.setItem("cart", JSON.stringify(newState));
+      return newState;
     }
   }
 };
