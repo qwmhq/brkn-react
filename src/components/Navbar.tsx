@@ -30,81 +30,88 @@ const Navbar = () => {
 
   const onOpenAutoFocus = (event: Event) => {
     event.preventDefault();
-  }
+  };
+
+  const onSearchItemClick = (_event: React.MouseEvent<HTMLAnchorElement>) => {
+    setSearchTerm("");
+    setShowSearchResults(false);
+  };
 
   return (
-    <>
-      <nav className="py-4 px-[--edge-gap] bg-[#333] uppercase text-sm flex flex-wrap gap-3 items-center justify-between sm:x-[flex-nowrap]">
+    <nav className="py-4 px-[--edge-gap] bg-[#333] uppercase text-sm flex flex-wrap gap-3 items-center justify-between sm:x-[flex-nowrap]">
 
-        <Popover
-          open={showSearchResults}
-          onOpenChange={setShowSearchResults}
+      <Popover
+        open={showSearchResults}
+        onOpenChange={setShowSearchResults}
+      >
+        <PopoverAnchor asChild>
+          <input
+            type="search"
+            name="search"
+            placeholder="SEARCH..."
+            aria-label="Search products"
+            value={searchTerm}
+            onChange={onSearchChange}
+            className="w-full py-1 px-0 text-white placeholder-[#6a6868] bg-transparent border-b border-b-white outline-none sm:x-[w-48]"
+          />
+        </PopoverAnchor>
+        <PopoverContent
+          onOpenAutoFocus={onOpenAutoFocus}
+          className="w-96 max-h-[36rem] overflow-y-scroll"
         >
-          <PopoverAnchor asChild>
-            <input
-              type="search"
-              name="search"
-              placeholder="SEARCH..."
-              aria-label="Search products"
-              value={searchTerm}
-              onChange={onSearchChange}
-              className="w-full py-1 px-0 text-white placeholder-[#6a6868] bg-transparent border-b border-b-white outline-none sm:x-[w-48]"
-            />
-          </PopoverAnchor>
-          <PopoverContent
-            onOpenAutoFocus={onOpenAutoFocus}
-            className="w-96 max-h-[36rem] overflow-y-scroll"
-          >
-            {searchResults.length > 0 ? searchResults.map((product, index) => {
-              return (
-                <div key={index}>
-                  <Link to={`/product/${product.slug}`} className="py-3 flex justify-start items-center gap-2">
-                    <img
-                      src={`../../public/img/products/${product.images[0]}`}
-                      alt={product.name}
-                      className="size-24 object-contain"
-                    />
-                    <div className="text-lg text-gray-800 flex-grow">
-                      <div>{product.name}</div>
-                      <div>₦{product.price.toLocaleString()}</div>
-                    </div>
-                  </Link>
-                  {index != searchResults.length - 1 && <Separator />}
-                </div >
-              );
-            }) : <div className="uppercase text-lg text-center">No Products Found</div>}
-          </PopoverContent>
-        </Popover>
+          {searchResults.length > 0 ? searchResults.map((product, index) => {
+            return (
+              <div key={index}>
+                <Link
+                  to={`/product/${product.slug}`}
+                  className="py-3 flex justify-start items-center gap-2"
+                  onClick={onSearchItemClick}
+                >
+                  <img
+                    src={`../../public/img/products/${product.images[0]}`}
+                    alt={product.name}
+                    className="size-24 object-contain"
+                  />
+                  <div className="text-lg text-gray-800 flex-grow">
+                    <div>{product.name}</div>
+                    <div>₦{product.price.toLocaleString()}</div>
+                  </div>
+                </Link>
+                {index != searchResults.length - 1 && <Separator />}
+              </div >
+            );
+          }) : <div className="uppercase text-lg text-center">No Products Found</div>}
+        </PopoverContent>
+      </Popover>
 
-        <ul className="flex flex-shrink flex-grow basis-auto justify-start sm:justify-center list-none gap-4 sm:gap-8 text-white placeholder-[#6a6868]">
-          <li>
-            <Link to="/">Home</Link>
-          </li>
+      <ul className="flex flex-shrink flex-grow basis-auto justify-start sm:justify-center list-none gap-4 sm:gap-8 text-white placeholder-[#6a6868]">
+        <li>
+          <Link to="/">Home</Link>
+        </li>
 
-          <li>
-            <Link to="/about">About</Link>
-          </li>
+        <li>
+          <Link to="/about">About</Link>
+        </li>
 
-          <li>
-            <Link to="/sessions">Sessions</Link>
-          </li>
+        <li>
+          <Link to="/sessions">Sessions</Link>
+        </li>
 
-          <li>
-            <a href="https://90642.org/">Lab</a>
-          </li>
-        </ul>
+        <li>
+          <a href="https://90642.org/">Lab</a>
+        </li>
+      </ul>
 
-        <div
-          className="pt-1 pr-4 relative flex-grow-0 flex-shrink-0 basis-auto text-white"
-        >
-          <Link to="/cart" className="uppercase">Cart</Link>
-          <div className={`size-4 rounded-full absolute top-0 right-0 bg-red-600 text-white text-xs ${cart.length > 0 ? "flex" : "hidden"} items-center justify-center`}>
-            <span className="text-center">{cart.length}</span>
-          </div>
+      <div
+        className="pt-1 pr-4 relative flex-grow-0 flex-shrink-0 basis-auto text-white"
+      >
+        <Link to="/cart" className="uppercase">Cart</Link>
+        <div className={`size-4 rounded-full absolute top-0 right-0 bg-red-600 text-white text-xs ${cart.length > 0 ? "flex" : "hidden"} items-center justify-center`}>
+          <span className="text-center">{cart.length}</span>
         </div>
+      </div>
 
-      </nav>
-    </>
+    </nav>
   );
 };
 
